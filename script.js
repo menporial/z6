@@ -129,7 +129,7 @@ function plotDraw(){
 };
 
 var layout = {
-  title: 'Graf sínusu a kosínusu',
+  title: 'Plot Sin vs Cos',
   showlegend: true
 };
 
