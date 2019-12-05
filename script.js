@@ -2,21 +2,25 @@
 var arrPlotX = [0];
 var arrSinY1 = [0];
 var arrCosY2 = [0];
+var traceA, traceB;
+var dataA, dataB;
+var lineDiv = document.getElementById('line-chart');
 
 
 
-if(typeof(EventSource) !== "undefined") {
+
+if(typeof(EventSource) !== "undefined") 
+{
     var source = new EventSource("http://vmzakova.fei.stuba.sk/sse/sse.php");
-    
-    source.addEventListener("message", function(e) {
-        coordinatesListener(e);
-			}, false);
-  
-} else {
+} 
+else 
+{
     document.getElementById("result").innerHTML = "Sorry, your browser does not support server-sent events...";
 }
 
-function coordinatesListener(e){
+function coordinatesListener(){
+  source.addEventListener("message", function(e)
+  {
     var data = JSON.parse(e.data);
     document.getElementById("result").innerHTML = e.data;
     if(data.x == 0){
@@ -28,28 +32,48 @@ function coordinatesListener(e){
         arrPlotX.push(data.x);
     }
 
-    console.log(arrPlotX);
-
+ //   console.log(arrPlotX);
+    plotDraw();  
+	}); 
+    
 
 }
-var lineDiv = document.getElementById('line-chart');
 
-var traceA = {
-  x: [1, 5, 13, 24, 35, 46, 60],
-  y: [80, 40, 70, 65, 15, 75, 49],
-  type: 'scatter'
+
+function plotDraw(){
+ traceA = {
+  x: arrPlotX,
+  y: arrSinY1,
+  type: 'scatter',
+  name: 'Sinus',
+  line: {
+    color: 'rgb(255, 153, 0)',
+    width: 2
+  }
 };
 
-var traceB = {
-  x: [4, 9, 17, 21, 31, 42, 56],
-  y: [64, 81, 3, 49, 25, 17, 26],
-  type: 'scatter'
+ traceB = {
+  x: arrPlotX,
+  y: arrCosY2,
+  type: 'scatter',
+  name: 'Cos',
+  line: {
+    color: 'rgb(153, 153, 255)',
+    width: 2
+  }
 };
-
-var data = [traceA, traceB];
 
 var layout = {
-  title:'A Line Chart in Plotly'
+  title: 'Graf sínusu a kosínusu',
+  showlegend: true
 };
 
-Plotly.plot( lineDiv, data, layout );
+//var data = [traceA, traceB];
+dataA = [traceA];
+dataB = [traceB];
+
+
+Plotly.plot(graph, [], layout );
+Plotly.addTraces(graph, dataA);
+Plotly.addTraces(graph, dataB);
+}
