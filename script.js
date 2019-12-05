@@ -1,7 +1,7 @@
 
 var arrPlotX = [0];
 var arrSinY1 = [0];
-var arrCosY2 = [0];
+var arrCosY2 = [1];
 var traceA, traceB;
 var dataA, dataB;
 var lineDiv = document.getElementById('line-chart');
@@ -33,10 +33,10 @@ function coordinatesListener(){
     }
 
  //   console.log(arrPlotX);
-    plotDraw();  
+ plotDraw(); 
 	}); 
     
-
+   
 }
 
 
@@ -73,7 +73,7 @@ dataA = [traceA];
 dataB = [traceB];
 
 
-Plotly.plot(graph, [], layout );
-Plotly.addTraces(graph, dataA);
-Plotly.addTraces(graph, dataB);
+Plotly.newPlot(lineDiv, [], layout );
+Plotly.addTraces(lineDiv, dataA);
+Plotly.addTraces(lineDiv, dataB);
 }
